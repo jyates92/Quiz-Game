@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>QUIZ</title>
+</head>
+
+<body>
+    <p id=view-highScores>View Highscores</p>
+    <p id=timer></p>
+    <div class="container" id="quiz-container">
+        <h3 id="question-text">QUESTION 1!</h3>
+        <!-- THIS WILL BE JQUERY TO CHANGE TEXT -->
+        <div class="container" id="answer-container">
+            <button type="button" class="btn btn-primary btn-sm answerbutton">A</button>
+            <button type="button" class="btn btn-secondary btn-sm answerbutton">B</button>
+            <button type="button" class="btn btn-primary btn-sm answerbutton">C</button>
+            <button type="button" class="btn btn-secondary btn-sm answerbutton">D</button>
+        </div>
+        
+    </div>
+    <!-- <div class="answer-choice" data-correct="0">b</div>
+    <div class="answer-choice">a</div>
+    <div class="answer-choice">b</div> -->
+
+
+</body>
+
+<script>
+    
+    $(".answerbutton").click(handleAnswerChosen) 
+    function handleAnswerChosen(){
+    // "BLANK" was clicked, 
+    // if correct alert "CORRECT!"
+    // if wrong alert WRONG and deduct 10s
+    // display next question
+
+    }
+    
+    // let questions = [
+    //     {
+    //         q: "question?",
+    //         choices: ["a", "a", "a", "a"],
+    //         a: 0
+    //     }
+    // ]
+    // //   add an event listener
+    // let userChoice = 0;
+    // if (userChoice === questions[0].a) {
+    //     //   alert you got it right
+    // }
+</script>
+
+</html>

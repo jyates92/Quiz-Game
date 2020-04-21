@@ -4,23 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"
+        integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../Style.css">
     <title>QUIZ</title>
 </head>
 
+
 <body>
-    <p id=view-highScores>View Highscores</p>
-    <p id=timer></p>
+    <div class="progress">
+        <button type="button" id=view-highScores>View Highscores</button>
+        <div id="time">60</div>
+    </div>
+    </div>
     <div class="container" id="quiz-container">
-        <h3 id="question-text">QUESTION 1!</h3>
+        <h3 id="question-text">THIS IS THE TEXT FOR QUESTION 1:</h3>
         <!-- THIS WILL BE JQUERY TO CHANGE TEXT -->
         <div class="container" id="answer-container">
-            <button type="button" class="btn btn-primary btn-sm answerbutton">A</button>
-            <button type="button" class="btn btn-secondary btn-sm answerbutton">B</button>
-            <button type="button" class="btn btn-primary btn-sm answerbutton">C</button>
-            <button type="button" class="btn btn-secondary btn-sm answerbutton">D</button>
+            <div>
+                <ul>
+                    <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-1">A: THIS
+                        ANSWER ISN'T POPULATED
+                        YET.</button>
+                    <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-2">B: THIS
+                        ANSWER ISN'T POPULATED
+                        YET.</button>
+                    <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-3">C: THIS
+                        ANSWER ISN'T POPULATED
+                        YET.</button>
+                    <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-4">D: THIS
+                        ANSWER ISN'T POPULATED
+                        YET.</button>
+                </ul>
+            </div>
         </div>
-        
+
     </div>
     <!-- <div class="answer-choice" data-correct="0">b</div>
     <div class="answer-choice">a</div>
@@ -30,28 +50,85 @@
 </body>
 
 <script>
-    
-    $(".answerbutton").click(handleAnswerChosen) 
-    function handleAnswerChosen(){
-    // "BLANK" was clicked, 
-    // if correct alert "CORRECT!"
-    // if wrong alert WRONG and deduct 10s
-    // display next question
+    let timeEl = document.querySelector("#time");
+    let secondsLeft = 60;
+    let currentQuestion = 0;
+
+    function setTime() {
+        let timerInterval = setInterval(function () {
+
+            timeEl.textContent = secondsLeft;
+            if (secondsLeft === 0) {
+                return;
+            } else {
+                secondsLeft--;
+            }
+        }, 1000);
+
+        // highScores();
+    }
+
+
+
+    // $("#view-highScores").click(highScores)
+    // function highScores() {
+    //     if (secondsLeft === 0;) {
+    //         viewHighScores();
+    //     }
+    //     END GAME
+    //     pull up high high - scores
+    // }
+
+
+    function handleAnswerChosen() {
+        const correctAnswer = questions[currentQuestion].a
+        // "BLANK" was clicked, 
+        // if correct alert "CORRECT!"
+        // if wrong alert WRONG and deduct 10s
+        // What button was clicked, is it the correct selection from the array?
+        data attributes
+        currentQuestion ++;
+        displayNextQuestion();
 
     }
     
-    // let questions = [
-    //     {
-    //         q: "question?",
-    //         choices: ["a", "a", "a", "a"],
-    //         a: 0
-    //     }
-    // ]
-    // //   add an event listener
-    // let userChoice = 0;
-    // if (userChoice === questions[0].a) {
-    //     //   alert you got it right
-    // }
+    // When setting possible answers determine how to store that array selection within button and that it is 
+    // correct number.
+
+    function displayNextQuestion() {
+
+        $("#question-text").text(questions[currentQuestion].q)
+        $("#answer-button-1").text(questions[0].choices[0])
+        $("#answer-button-2").text(questions[0].choices[1])
+        $("#answer-button-3").text(questions[0].choices[2])
+        $("#answer-button-4").text(questions[0].choices[3])
+    }
+    // $("#start-button").click(startQuiz)
+    function startQuiz() {
+        setTime();
+        $("#question-text").text(questions[currentQuestion].q)
+        $("#answer-button-1").text(questions[0].choices[0])
+        $("#answer-button-2").text(questions[0].choices[1])
+        $("#answer-button-3").text(questions[0].choices[2])
+        $("#answer-button-4").text(questions[0].choices[3])
+
+    }
+
+    const questions = [
+        {
+            q: "THIS IS THE TEXT FOR QUESTION 1?",
+            choices: ["a", "b", "c", "d"],
+            a: 0
+        }
+    ]
+    startQuiz();
+    //   add an event listener
+    let userChoice = 0;
+    if (userChoice === questions[0].a) {
+        //   alert you got it right
+    }
+
+    $(".answerbutton").click(handleAnswerChosen)
 </script>
 
 </html>

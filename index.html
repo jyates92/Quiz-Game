@@ -2,133 +2,426 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.0.js"
-        integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../Style.css">
-    <title>QUIZ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./Style.css">
+  <title>QUIZ</title>
 </head>
 
 
 <body>
-    <div class="progress">
-        <button type="button" id=view-highScores>View Highscores</button>
-        <div id="time">60</div>
+  <div class="progress">
+    <button type="button" id=view-highScores>View Highscores</button>
+    <div id="time">60</div>
+  </div>
+  </div>
+  <button type="button" id="startButton">start quiz</button>
+  <div class="container" id="quiz-container">
+    <h3 id="question-text">THIS IS THE TEXT FOR QUESTION 1:</h3>
+    <div class="container" id="answer-container">
+      <div>
+        <ul>
+          <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-1">A: THIS
+            ANSWER ISN'T POPULATED
+            YET.</button>
+          <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-2">B: THIS
+            ANSWER ISN'T POPULATED
+            YET.</button>
+          <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-3">C: THIS
+            ANSWER ISN'T POPULATED
+            YET.</button>
+          <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-4">D: THIS
+            ANSWER ISN'T POPULATED
+            YET.</button>
+        </ul>
+      </div>
     </div>
-    </div>
-    <div class="container" id="quiz-container">
-        <h3 id="question-text">THIS IS THE TEXT FOR QUESTION 1:</h3>
-        <!-- THIS WILL BE JQUERY TO CHANGE TEXT -->
-        <div class="container" id="answer-container">
-            <div>
-                <ul>
-                    <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-1">A: THIS
-                        ANSWER ISN'T POPULATED
-                        YET.</button>
-                    <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-2">B: THIS
-                        ANSWER ISN'T POPULATED
-                        YET.</button>
-                    <button type="button" class="btn btn-primary btn-sm answerbutton" id="answer-button-3">C: THIS
-                        ANSWER ISN'T POPULATED
-                        YET.</button>
-                    <button type="button" class="btn btn-secondary btn-sm answerbutton" id="answer-button-4">D: THIS
-                        ANSWER ISN'T POPULATED
-                        YET.</button>
-                </ul>
-            </div>
-        </div>
 
-    </div>
-    <!-- <div class="answer-choice" data-correct="0">b</div>
+  </div>
+  <!-- <div class="answer-choice" data-correct="0">b</div>
     <div class="answer-choice">a</div>
     <div class="answer-choice">b</div> -->
 
 
 </body>
 
+
 <script>
-    let timeEl = document.querySelector("#time");
-    let secondsLeft = 60;
-    let currentQuestion = 0;
 
-    function setTime() {
-        let timerInterval = setInterval(function () {
+  let timeEl = document.querySelector("#time");
+  let secondsLeft = 60;
+  let currentQuestion = 0;
+  var questionText = $("#question-text");
+  var optionOne = $("#answer-button-1");
+  var optionTwo = $("#answer-button-2");
+  var optionThree = $("#answer-button-3");
+  var optionFour = $("#answer-button-4");
 
-            timeEl.textContent = secondsLeft;
-            if (secondsLeft === 0) {
-                return;
-            } else {
-                secondsLeft--;
-            }
-        }, 1000);
+  $("#startButton").click(function () {
+    $("#quiz-container").show();
+    $("#startButton").hide();
+  });
 
-        // highScores();
+
+  function setTime() {
+    let timerInterval = setInterval(function () {
+      timeEl.textContent = secondsLeft;
+      if (secondsLeft === 0) {
+        return;
+      } else {
+        secondsLeft--;
+      }
+    }, 1000);
+
+    // highScores();
+  }
+
+
+
+  // $("#view-highScores").click(highScores)
+  // function highScores() {
+  //     if (secondsLeft === 0;) {
+  //         viewHighScores();
+  //     }
+  //     END GAME
+  //     pull up high high - scores
+  // }
+
+
+  function handleAnswerChosen() {
+    const correctAnswer = questions[currentQuestion].a
+    // "BLANK" was clicked, 
+    // if correct alert "CORRECT!"
+    // if wrong alert WRONG and deduct 10s
+    // What button was clicked, is it the correct selection from the array?
+    currentQuestion++;
+    displayNextQuestion();
+  };
+
+  // When setting possible answers determine how to store that array selection within button and that it is 
+  // correct number.
+
+  function displayNextQuestion() {
+
+    $("#question-text").text(questions[currentQuestion].q)
+    $("#answer-button-1").text(questions[0].choices[0])
+    $("#answer-button-2").text(questions[0].choices[1])
+    $("#answer-button-3").text(questions[0].choices[2])
+    $("#answer-button-4").text(questions[0].choices[3])
+  }
+  // $("#start-button").click(startQuiz)
+  function startQuiz() {
+    setTime();
+    $("#question-text").text(questions[currentQuestion].q)
+    $("#answer-button-1").text(questions[0].choices[0])
+    $("#answer-button-2").text(questions[0].choices[1])
+    $("#answer-button-3").text(questions[0].choices[2])
+    $("#answer-button-4").text(questions[0].choices[3])
+
+  }
+
+  const questions = [
+    {
+      q: "THIS IS THE TEXT FOR QUESTION 1?",
+      choices: ["a", "b", "c", "d"],
+      a: 0
+    },
+    {
+      q: "THIS IS THE TEXT FOR QUESTION 2?",
+      choices: ["a", "b", "c", "d"],
+      a: 1
+    },
+    {
+      q: "THIS IS THE TEXT FOR QUESTION 3?",
+      choices: ["a", "b", "c", "d"],
+      a: 2
+    },
+    {
+      q: "THIS IS THE TEXT FOR QUESTION 4?",
+      choices: ["a", "b", "c", "d"],
+      a: 3
+    },
+    {
+      q: "THIS IS THE TEXT FOR QUESTION 5?",
+      choices: ["a", "b", "c", "d"],
+      a: 0
     }
+  ];
 
+  startQuiz();
+  //   add an event listener
+  let userChoice = 0;
+  if (userChoice === questions[0].a) {
+    //   alert you got it right
+  }
 
-
-    // $("#view-highScores").click(highScores)
-    // function highScores() {
-    //     if (secondsLeft === 0;) {
-    //         viewHighScores();
-    //     }
-    //     END GAME
-    //     pull up high high - scores
-    // }
-
-
-    function handleAnswerChosen() {
-        const correctAnswer = questions[currentQuestion].a
-        // "BLANK" was clicked, 
-        // if correct alert "CORRECT!"
-        // if wrong alert WRONG and deduct 10s
-        // What button was clicked, is it the correct selection from the array?
-        data attributes
-        currentQuestion ++;
-        displayNextQuestion();
-
-    }
-    
-    // When setting possible answers determine how to store that array selection within button and that it is 
-    // correct number.
-
-    function displayNextQuestion() {
-
-        $("#question-text").text(questions[currentQuestion].q)
-        $("#answer-button-1").text(questions[0].choices[0])
-        $("#answer-button-2").text(questions[0].choices[1])
-        $("#answer-button-3").text(questions[0].choices[2])
-        $("#answer-button-4").text(questions[0].choices[3])
-    }
-    // $("#start-button").click(startQuiz)
-    function startQuiz() {
-        setTime();
-        $("#question-text").text(questions[currentQuestion].q)
-        $("#answer-button-1").text(questions[0].choices[0])
-        $("#answer-button-2").text(questions[0].choices[1])
-        $("#answer-button-3").text(questions[0].choices[2])
-        $("#answer-button-4").text(questions[0].choices[3])
-
-    }
-
-    const questions = [
-        {
-            q: "THIS IS THE TEXT FOR QUESTION 1?",
-            choices: ["a", "b", "c", "d"],
-            a: 0
-        }
-    ]
-    startQuiz();
-    //   add an event listener
-    let userChoice = 0;
-    if (userChoice === questions[0].a) {
-        //   alert you got it right
-    }
-
-    $(".answerbutton").click(handleAnswerChosen)
+  $(".answerbutton").click(handleAnswerChosen)
 </script>
 
 </html>
+
+
+
+<!-- let myOddArray = [1, 3, 5, 7, 9]
+
+let myEvenArray = [ 2, 4, 6, 8, 10 , 12]
+
+let myFunc = function(myString) {
+  console.log(myString)
+}
+
+let addToArray = function() {
+  myArray.push(999)
+}
+
+//declaring a variable to be a function (it isn't called yet)
+let sumAllNumbersInArray = function(myArrayOne, myArrayTwo) {
+  let firstArraySum = 0;
+  let secondArraySum = 0;
+  for(let i = 0; i < myArrayOne.length; i++) {
+    firstArraySum+= myArrayOne[i]
+  }
+  for(let i = 0; i < myArrayTwo.length; i++) {
+    secondArraySum+= myArrayTwo[i]
+  }
+
+
+  //you can return anything from a function
+  // return firstArraySum - secondArraySum
+  return "cheese and potatoes"
+  //once you return from a function nothing else in it will excecute
+  console.log("Hey I'm still here!")
+}
+
+//assigning a variable to be the result of a function (now its called)
+let finalTally = sumAllNumbersInArray(myOddArray, myEvenArray)
+
+//logging the variable that holds the result of the function
+console.log(finalTally)
+
+
+
+let globalTimer = 100
+let currentQuestion = 0;
+
+let questions = [
+  {
+    question: '1 + 1 = _',
+    answer: '2'
+  },
+  {
+    question: '2 + 1 = _',
+    answer: '3'
+  }, 
+  {
+    question: '2 + 4 = _',
+    answer: '6'
+  }
+]
+
+function askQuestion(arrayOfQuestions, questionIndex) {
+  let question = arrayOfQuestions[questionIndex].question
+  let answer = arrayOfQuestions[questionIndex].answer
+
+  let userInput = prompt(question)
+
+  if (userInput != answer) {
+    globalTimer -= 10
+    alert("Wrong answer." + globalTimer + " seconds remaining.")
+  } else {
+    alert("Correct!")
+    currentQuestion++
+  }
+
+}
+
+
+while(currentQuestion < questions.length) {
+  askQuestion(questions, currentQuestion)
+}
+
+
+
+
+//declaring a promise
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {  //this timeout can be an ajax call
+        resolve(10); //resolves with the int 10
+    }, 5 * 100); //timeout value here
+});
+
+//logging the result of a promise after it resolves
+p.then((result) => {
+  console.log('line 11: ' + result)
+  })
+
+//declaring a function that returns a promise
+let promiseFunctionOne = function() {
+  return new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve(50); //resolves with int 50
+      }, 5 * 100);
+  })
+}
+//logging a promise function before it resolves
+console.log('line 23: ' + promiseFunctionOne())
+
+//declaring a function that takes param that returns a promise
+let promiseFunctionTwo = function(myParameter) { //try different params
+  return new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve(myParameter + 10);
+      }, 5 * 100);
+  });
+}
+//logging a promise after it resolves
+promiseFunctionTwo(50).then((result) => { //try something besides 50
+  console.log('promiseFunctionTwo: ' + result)
+  })
+
+//nested promise function with passing result to next function
+promiseFunctionOne().then((firstResult) => {
+  promiseFunctionTwo(firstResult).then((result) => {
+    console.log('nested promise result: ' + result)
+  })
+})
+
+
+
+
+let isNums = true;
+let isPunctuation = true;
+
+let generateString = function(banana, cello) {
+  let newString = ''
+
+  let numArray = [0, 1, 2, 3]
+  let punctuationArray = ['!', '?', ',']
+  let alphabet = ['a', 'b', 'c', 'd']
+
+  // numArray[0]
+
+  // if(nums) {
+  //   newString.concat(numArray[Math.random(0, 3)])
+  // }
+
+  if(banana) {
+  console.log(numArray[2])
+  }
+
+  if(cello) {
+  console.log(punctuationArray[2])
+  }
+
+  return newString
+}
+
+generateString(isNums, isPunctuation
+
+
+//declaring but not calling a timeout function that takes 2 seconds to comple
+function simpleTimeout() {
+  setTimeout(function(){ alert("I'm a slow function on line 6") }, 2000);
+}
+
+simpleTimeout() //calling the slow function on line 5 but the next line finishes first
+console.log("I'm line 10 and run before slow functions")  //this runs before the prior line
+
+//declaring a slow function that wraps its timeout in a promise
+function promiseTimeout() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function(){ 
+      console.log("I'm a promise on line 16")
+      //resolve allows us to pass any values from our completed promise
+      resolve("string from resolved promise") 
+      }, 4000);
+  })
+}
+//calling a promise here
+promiseTimeout()
+  .then(result => { //this .then only runs after the promise on line 13 finishes
+    console.log("this result is passed from line 18: " + result)
+    console.log("I'm a callback on line 26 and I always run after a promise finishes")
+  })
+
+  
+
+
+//declaring but not calling a timeout function that takes 2 seconds to comple
+function simpleTimeout() {
+  setTimeout(function(){ alert("I'm a slow function on line 6") }, 2000);
+}
+
+simpleTimeout() //calling the slow function on line 5 but the next line finishes first
+console.log("I'm line 10 and run before slow functions")  //this runs before the prior line
+
+//declaring a slow function that wraps its timeout in a promise
+function promiseTimeout() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function(){ 
+      console.log("I'm a promise on line 16")
+      //resolve allows us to pass any values from our completed promise
+      resolve("string from resolved promise") 
+      }, 4000);
+  })
+}
+//calling a promise here
+promiseTimeout()
+  .then(result => { //this .then only runs after the promise on line 13 finishes
+    console.log("this result is passed from line 18: " + result)
+    console.log("I'm a callback on line 26 and I always run after a promise finishes")
+  })
+
+
+  
+//declaration of a template or blueprint to create People
+class Person {
+  //Each person requires a name when a new person is instantiated
+  constructor(name) {
+    this.name = name  //Assigning the argument passed to constructor
+  }                   //to the new Person object when it is instantiated
+}
+
+//instantiating two new people
+let Mom = new Person("Pat");
+let Dad = new Person("Patrick");
+
+let Gramps = new Person("Eugene");
+let Gramma = new Person("Gertrude");
+
+//declaration of a template or blueprint to create Houses
+class House {
+  //Each house requires an array of people when it is instantiated
+  constructor(arrayOfInhabitants) {
+    this.inhabitants = arrayOfInhabitants;
+  }
+  addInhabitant(person) {   //optional function that allows you to add more people to houses
+    this.inhabitants.push(person)
+  }
+}
+
+//instantiating a new house with an array with people from line 11 and 12
+let oneHouse = new House([Mom, Dad])
+let twoHouse = new House([Gramps, Gramma])
+
+//declaration of a template or blueprint to create Neighborhoods
+class Neighborhood {
+  constructor(arrayOfHouses) {
+    this.houses = arrayOfHouses;
+  }
+  //function to iterate through all houses and list the people inside
+  listPeopleInHouses() {
+    for (let i = 0; i < this.houses.length; i++) {
+      console.log(this.houses[i].inhabitants)
+    }
+  }
+}
+
+//instantiation or creation of a neighborhood from 
+let myNeighborhood = new Neighborhood([oneHouse, twoHouse]);
+
+myNeighborhood.listPeopleInHouses() -->

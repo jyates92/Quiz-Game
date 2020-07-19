@@ -18,9 +18,11 @@
     <button type="button" id="view-highScores">View Highscores</button>
     <div id="myModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
         <p>Your Hi-Score!</p>
-        <ul id="hi-scores-text"></ul>
+        <ul id="hiScoresText"></ul>
+        <form id="hiScoreForm"><input id="hiScoreInput" placeholder="Please enter a name" required></input>
+          <button id="hiScoreSubmit">SUBMIT</button></form>
+        <span class="close">&times;</span>
       </div>
 
     </div>
@@ -56,9 +58,6 @@
     </div>
 
   </div>
-  <!-- <div class="answer-choice" data-correct="0">b</div>
-    <div class="answer-choice">a</div>
-    <div class="answer-choice">b</div> -->
 
 
 </body>
@@ -66,46 +65,47 @@
 
 <script>
 
+  let timerInterval = null;
   let timeEl = document.querySelector("#time");
   let secondsLeft = 60;
   let currentQuestion = 0;
+  let score = 0;
   var questionText = $("#question-text");
   var optionOne = $("#answer-button-1");
   var optionTwo = $("#answer-button-2");
   var optionThree = $("#answer-button-3");
   var optionFour = $("#answer-button-4");
+  $("#hiScoreForm").hide();
+  $("#hiScoreForm").on("submit", saveHiScore);
 
-  $(".answerbutton").click(handleAnswerChosen)
+  function saveHiScore(event) {
+    event.preventDefault()
+    let hiScoreVal = $("#hiScoreInput").val()
+    let scoreString = hiScoreVal + " - " + score
+    $("#hiScoresText").append(scoreString);
+    localStorage.setItem('hiScoreString', scoreString);
+    $("#hiScoreForm").hide();
+  };
+
+
+  $(".answerbutton").on("click", handleAnswerChosen)
   $("#startButton").click(function () {
     startQuiz();
     $("#quiz-container").show();
     $("#startQuizCard").hide();
-
   });
 
 
   function setTime() {
-    let timerInterval = setInterval(function () {
-      timeEl.textContent = secondsLeft--;
+    timerInterval = setInterval(function () {
+      timeEl.textContent = --secondsLeft;
+      console.log(secondsLeft);
       if (secondsLeft === 0) {
-        $(".modal").toggle();
+        calculateScore();
         return;
       }
     }, 1000);
-
-    // highScores();
   };
-
-
-
-  // $("#view-highScores").click(highScores)
-  // function highScores() {
-  //     if (secondsLeft === 0;) {
-  //         viewHighScores();
-  //     }
-  //     END GAME
-  //     pull up high high - scores
-  // }
 
 
   function handleAnswerChosen(event) {
@@ -115,15 +115,16 @@
 
     if (chosenAnswer === correctAnswer) {
       alert("Correct");
-      // score++;
+      score++;
     } else {
       alert("Incorrect");
       secondsLeft -= 10;
-      // score--;
+      score--;
     }
     currentQuestion++;
     displayNextQuestion();
   };
+
 
 
   function displayNextQuestion() {
@@ -132,12 +133,12 @@
       return calculateScore();
     }
     $("#question-text").text(questions[currentQuestion].q)
-    $("#answer-button-1").text(questions[0].choices[0])
-    $("#answer-button-2").text(questions[0].choices[1])
-    $("#answer-button-3").text(questions[0].choices[2])
-    $("#answer-button-4").text(questions[0].choices[3])
+    $("#answer-button-1").text(questions[currentQuestion].choices[0])
+    $("#answer-button-2").text(questions[currentQuestion].choices[1])
+    $("#answer-button-3").text(questions[currentQuestion].choices[2])
+    $("#answer-button-4").text(questions[currentQuestion].choices[3])
   }
-  // Function to handle timer setup and what question is presented. 
+
   function startQuiz() {
     setTime();
     $("#question-text").text(questions[currentQuestion].q)
@@ -145,14 +146,21 @@
     $("#answer-button-2").text(questions[0].choices[1])
     $("#answer-button-3").text(questions[0].choices[2])
     $("#answer-button-4").text(questions[0].choices[3])
-
   }
 
   function calculateScore() {
-
+    $(".answerbutton").off("click")
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    $("#hiScoreForm").show();
+    $(".modal").toggle();
+    console.log("game over!")
   }
 
-  // Array of objects containing the questions, choices, and answers. 
+  let isNameStored = false
+
+
   const questions = [
     {
       q: "What is social mobilty?",
